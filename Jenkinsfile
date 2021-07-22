@@ -19,6 +19,7 @@ pipeline {
     stages {
         stage("Build") {
             steps {
+                sh "sed -i 's/%VERSION%/${BRANCH_NAME}-${BUILD_NUMBER}/' gradle.properties"
                 sh "./gradlew clean build jar"
             }
         }
