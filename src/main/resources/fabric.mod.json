@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "fabric-utils",
+  "id": "nibbles",
   "version": "${version}",
-  "name": "Bits Fabric Utils",
+  "name": "Nibbles",
   "authors": [
     "Koenn",
     "KallumJ"
