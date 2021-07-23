@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                sh "sed -i 's/%VERSION%/${BRANCH_NAME}-${BUILD_NUMBER}/' gradle.properties"
+                sh "sed -i 's/%VERSION%/${BUILD_NUMBER}/' gradle.properties"
                 sh "./gradlew clean build jar"
             }
         }
@@ -29,6 +29,13 @@ pipeline {
                 script {
                     files = findFiles(glob: 'build/libs/*.jar')
                     artifactPath = files[0].path;
+
+                    if (env.BRANCH_NAME == "master") {
+                        artifactId = "nibbles"
+                    } else {
+                        artifactId = "nibbles-${BRANCH_NAME}"
+                    }
+
                     nexusArtifactUploader(
                         nexusVersion: NEXUS_VERSION,
                         protocol: NEXUS_PROTOCOL,
@@ -38,7 +45,7 @@ pipeline {
                         repository: NEXUS_REPOSITORY,
                         credentialsId: NEXUS_CREDENTIAL_ID,
                         artifacts: [
-                            [artifactId: "fabric-utils",
+                            [artifactId: artifactId,
                             classifier: '',
                             file: artifactPath,
                             type: "jar"]
