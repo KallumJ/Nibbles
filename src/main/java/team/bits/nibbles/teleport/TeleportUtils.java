@@ -1,4 +1,4 @@
-package team.bits.fabricutils;
+package team.bits.nibbles.teleport;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
@@ -15,6 +15,12 @@ public final class TeleportUtils {
     private TeleportUtils() {
     }
 
+    /**
+     * Teleport a player to a given {@link Location}. Works across dimensions.
+     *
+     * @param player   the {@link ServerPlayerEntity} to teleport
+     * @param location the {@link Location} to teleport to
+     */
     public static void teleport(@NotNull ServerPlayerEntity player, @NotNull Location location) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(location);

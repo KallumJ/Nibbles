@@ -1,4 +1,4 @@
-package team.bits.fabricutils;
+package team.bits.nibbles.teleport;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.world.ServerWorld;

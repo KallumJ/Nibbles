@@ -31,8 +31,10 @@ pipeline {
                     artifactPath = files[0].path;
 
                     if (env.BRANCH_NAME == "master") {
+                        groupId = "team.bits"
                         artifactId = "nibbles"
                     } else {
+                        groupId = "team.bits.nibbles.dev"
                         artifactId = "nibbles-${BRANCH_NAME}"
                     }
 
@@ -40,7 +42,7 @@ pipeline {
                         nexusVersion: NEXUS_VERSION,
                         protocol: NEXUS_PROTOCOL,
                         nexusUrl: NEXUS_URL,
-                        groupId: "team.bits",
+                        groupId: groupId,
                         version: "${BUILD_NUMBER}",
                         repository: NEXUS_REPOSITORY,
                         credentialsId: NEXUS_CREDENTIAL_ID,
