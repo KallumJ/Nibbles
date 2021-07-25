@@ -27,8 +27,7 @@ pipeline {
         stage("Publish") {
             steps {
                 script {
-                    files = findFiles(glob: 'build/libs/nibbles-${BUILD_NUMBER}.jar')
-                    artifactPath = files[0].path;
+                    artifactPath = 'build/libs/nibbles-${BUILD_NUMBER}.jar';
 
                     if (env.BRANCH_NAME == "master") {
                         groupId = "team.bits"
