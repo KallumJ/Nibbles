@@ -20,14 +20,14 @@ pipeline {
         stage("Build") {
             steps {
                 sh "sed -i 's/%VERSION%/${BUILD_NUMBER}/' gradle.properties"
-                sh "./gradlew clean build jar"
+                sh "./gradlew clean compileJava classes jar remapJar"
             }
         }
 
         stage("Publish") {
             steps {
                 script {
-                    files = findFiles(glob: 'build/libs/*.jar')
+                    files = findFiles(glob: 'build/libs/nibbles-${BUILD_NUMBER}.jar')
                     artifactPath = files[0].path;
 
                     if (env.BRANCH_NAME == "master") {
