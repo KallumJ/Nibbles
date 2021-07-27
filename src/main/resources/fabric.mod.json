@@ -18,6 +18,7 @@
     ]
   },
   "mixins": [
+    "nibbles.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.3",

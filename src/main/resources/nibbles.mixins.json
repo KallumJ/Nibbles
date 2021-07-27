@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "team.bits.nibbles.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [],
+  "server": [
+    "PlayerDamageMixin",
+    "PlayerConnectMixin",
+    "PlayerDisconnectMixin",
+    "PlayerSleepMixin",
+    "PlayerMoveMixin",
+    "PlayerWakeUpMixin",
+    "ServerTickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
