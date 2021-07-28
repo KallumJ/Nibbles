@@ -11,7 +11,8 @@
     "PlayerSleepMixin",
     "PlayerMoveMixin",
     "PlayerWakeUpMixin",
-    "ServerTickMixin"
+    "ServerTickMixin",
+    "ServerInstanceMixin"
   ],
   "injectors": {
     "defaultRequire": 1
