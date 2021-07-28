@@ -9,6 +9,8 @@ import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
 import org.jetbrains.annotations.NotNull;
 import team.bits.nibbles.command.CommandManager;
+import team.bits.nibbles.event.misc.ServerTickEvent;
+import team.bits.nibbles.utils.Scheduler;
 
 public class Nibbles implements ModInitializer {
 
@@ -33,6 +35,8 @@ public class Nibbles implements ModInitializer {
     public void onInitialize() {
         ServerLifecycleEvents.SERVER_STARTING.register(server -> adventure = FabricServerAudiences.of(server));
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> adventure = null);
+
+        ServerTickEvent.EVENT.register(server -> Scheduler.tick());
 
         CommandRegistrationCallback.EVENT.register(CommandManager.INSTANCE);
     }
