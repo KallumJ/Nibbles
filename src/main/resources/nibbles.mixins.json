@@ -12,7 +12,8 @@
     "PlayerMoveMixin",
     "PlayerWakeUpMixin",
     "ServerTickMixin",
-    "ServerInstanceMixin"
+    "ServerInstanceMixin",
+    "PlayerInteractWithBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
