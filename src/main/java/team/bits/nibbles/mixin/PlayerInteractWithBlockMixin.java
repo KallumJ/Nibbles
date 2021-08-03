@@ -1,33 +1,39 @@
 package team.bits.nibbles.mixin;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.ServerPlayerInteractionManager;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.misc.PlayerInteractWithBlockEvent;
 
-@Mixin(ServerPlayerInteractionManager.class)
+@Mixin(ServerPlayNetworkHandler.class)
 public class PlayerInteractWithBlockMixin {
 
+    @Shadow
+    public ServerPlayerEntity player;
+
     @Inject(
-            method = "interactBlock",
-            at = @At("HEAD")
+            method = "onPlayerInteractBlock",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/network/packet/c2s/play/PlayerInteractBlockC2SPacket;getBlockHitResult()Lnet/minecraft/util/hit/BlockHitResult;"
+            )
     )
-    public void onInteractBlock(ServerPlayerEntity player, World world, ItemStack stack, Hand hand,
-                                BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+    public void onInteractBlock(PlayerInteractBlockC2SPacket packet, CallbackInfo ci) {
 
+        final BlockHitResult hitResult = packet.getBlockHitResult();
+        final Hand hand = packet.getHand();
         final BlockPos pos = hitResult.getBlockPos();
-        final BlockState blockState = world.getBlockState(pos);
+        final BlockState blockState = this.player.world.getBlockState(pos);
 
-        PlayerInteractWithBlockEvent.EVENT.invoker().onPlayerInteract(player, pos, blockState);
+        PlayerInteractWithBlockEvent.EVENT.invoker().onPlayerInteract(this.player, pos, blockState, hand);
     }
 }
