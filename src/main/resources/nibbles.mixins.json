@@ -5,15 +5,17 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [],
   "server": [
-    "PlayerDamageMixin",
+    "CopyPlayerDataMixin",
+    "NibblesPlayerMixin",
     "PlayerConnectMixin",
+    "PlayerDamageMixin",
     "PlayerDisconnectMixin",
-    "PlayerSleepMixin",
+    "PlayerInteractWithBlockMixin",
     "PlayerMoveMixin",
+    "PlayerSleepMixin",
     "PlayerWakeUpMixin",
-    "ServerTickMixin",
     "ServerInstanceMixin",
-    "PlayerInteractWithBlockMixin"
+    "ServerTickMixin"
   ],
   "injectors": {
     "defaultRequire": 1
