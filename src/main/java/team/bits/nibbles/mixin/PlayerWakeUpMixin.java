@@ -16,7 +16,7 @@ public class PlayerWakeUpMixin {
             method = "wakeUp"
     )
     private void onWakeUp(boolean bl, boolean updateSleepingPlayers, CallbackInfo ci) {
-        PlayerEntity player = PlayerEntity.class.cast(this);
+        PlayerEntity player = (PlayerEntity) (Object) this;
         PlayerWakeUpEvent.EVENT.invoker().onWakeUp(player);
     }
 

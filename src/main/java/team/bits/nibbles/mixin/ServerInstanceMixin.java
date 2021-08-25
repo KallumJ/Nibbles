@@ -32,6 +32,6 @@ public class ServerInstanceMixin {
             MinecraftSessionService sessionService, GameProfileRepository gameProfileRepo, UserCache userCache,
             WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
 
-        ServerInstance.set(MinecraftDedicatedServer.class.cast(this));
+        ServerInstance.set((MinecraftDedicatedServer) (Object) this);
     }
 }

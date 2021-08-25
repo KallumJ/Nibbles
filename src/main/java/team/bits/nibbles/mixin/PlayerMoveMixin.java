@@ -20,7 +20,7 @@ public class PlayerMoveMixin {
             at = @At("TAIL")
     )
     private void onTickMovement(CallbackInfo ci) {
-        PlayerEntity player = PlayerEntity.class.cast(this);
+        PlayerEntity player = (PlayerEntity) (Object) this;
         Vec3d currentPos = player.getPos();
         Vec3d moveVector = this.previousPos.subtract(currentPos);
 

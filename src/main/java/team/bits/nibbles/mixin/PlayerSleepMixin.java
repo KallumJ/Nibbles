@@ -8,10 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import team.bits.nibbles.event.sleep.PlayerSleepEvent;
-import team.bits.nibbles.event.sleep.PlayerWakeUpEvent;
 
 @Mixin(ServerPlayerEntity.class)
 public class PlayerSleepMixin {
@@ -23,7 +21,7 @@ public class PlayerSleepMixin {
     )
     private void onSleep(BlockPos pos,
                          CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> cir) {
-        PlayerEntity player = PlayerEntity.class.cast(this);
+        PlayerEntity player = (PlayerEntity) (Object) this;
         PlayerSleepEvent.EVENT.invoker().onSleep(player);
     }
 

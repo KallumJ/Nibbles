@@ -17,7 +17,7 @@ public class ServerTickMixin {
             method = "tick"
     )
     public void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        MinecraftServer server = MinecraftServer.class.cast(this);
+        MinecraftServer server = (MinecraftServer) (Object) this;
         ServerTickEvent.EVENT.invoker().onTick(server);
     }
 }
