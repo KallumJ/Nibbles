@@ -1,9 +1,12 @@
 package team.bits.nibbles.database.driver;
 
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,14 +30,23 @@ class DatabaseDriver implements IDatabaseDriver {
             throw new DatabaseDriverException("Database connection has already been established");
         }
 
-        String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=false&autoReconnect=true",
-                this.properties.address(),
-                this.properties.port(),
-                this.properties.databaseName()
-        );
+        URI uri;
+        try {
+            uri = new URIBuilder()
+                    .setScheme("jdbc:mysql")
+                    .setHost(this.properties.address())
+                    .setPort(this.properties.port())
+                    .setPath(String.format("/%s", this.properties.databaseName()))
+                    .addParameter("useSSL", "false")
+                    .addParameter("autoReconnect", "true")
+                    .build();
+        } catch (URISyntaxException ex) {
+            throw new DatabaseDriverException("Unable to build database URI", ex);
+        }
 
         try {
-            this.connection = DriverManager.getConnection(url,
+            this.connection = DriverManager.getConnection(
+                    uri.toString(),
                     this.properties.username(),
                     this.properties.password()
             );
@@ -52,6 +64,7 @@ class DatabaseDriver implements IDatabaseDriver {
         try {
             if (this.connection != null && !this.connection.isClosed()) {
                 this.connection.close();
+                this.connection = null;
                 LOGGER.info("Database connection closed");
             }
         } catch (SQLException ex) {
@@ -60,10 +73,15 @@ class DatabaseDriver implements IDatabaseDriver {
     }
 
     @Override
-    public @NotNull Connection getConnection() {
+    public @NotNull Connection getConnection() throws DatabaseDriverException {
         if (this.connection == null) {
             throw new DatabaseDriverException("Database connection hasn't been opened yet");
         }
         return this.connection;
+    }
+
+    @Override
+    public @NotNull DatabaseProperties getProperties() {
+        return this.properties;
     }
 }
