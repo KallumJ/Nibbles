@@ -1,18 +1,18 @@
 package team.bits.nibbles.event.misc;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
+import team.bits.nibbles.event.base.CustomEventFactory;
+import team.bits.nibbles.event.base.NibblesEvent;
+import team.bits.nibbles.utils.Scheduler;
 
 public interface ServerTickEvent {
 
-
-    Event<ServerTickEvent> EVENT = EventFactory.createArrayBacked(ServerTickEvent.class,
+    NibblesEvent<ServerTickEvent> EVENT = CustomEventFactory.createCollectionBacked(ServerTickEvent.class,
             (listeners) -> (server) -> {
                 for (ServerTickEvent listener : listeners) {
                     listener.onTick(server);
                 }
+                Scheduler.afterTick();
             }
     );
 

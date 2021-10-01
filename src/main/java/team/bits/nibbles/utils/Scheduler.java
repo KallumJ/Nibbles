@@ -17,6 +17,7 @@ public final class Scheduler {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final Collection<ScheduledTask> tasks = new LinkedList<>();
+    private static final Collection<Runnable> afterTick = new LinkedList<>();
 
     public static void schedule(@NotNull Runnable command, long delay) {
         tasks.add(new ScheduledTask(command, delay, 0));
@@ -40,6 +41,10 @@ public final class Scheduler {
         });
     }
 
+    public static void runAfterTick(@NotNull Runnable runnable) {
+        afterTick.add(runnable);
+    }
+
     public static void tick() {
         for (ScheduledTask task : new ArrayList<>(tasks)) {
             try {
@@ -51,6 +56,11 @@ public final class Scheduler {
         }
 
         tasks.removeIf(ScheduledTask::isDone);
+    }
+
+    public static void afterTick() {
+        afterTick.forEach(Runnable::run);
+        afterTick.clear();
     }
 
     public static void stop() {
