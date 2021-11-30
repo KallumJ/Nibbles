@@ -4,23 +4,19 @@ pipeline {
     }
 
     tools {
-        jdk 'jdk_16'
+        jdk 'jdk_17'
         maven 'Maven'
     }
 
     environment {
-        NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "172.17.0.1:8081/nexus"
-        NEXUS_REPOSITORY = "bits-maven-repo"
-        NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
+        DISCORD_WEBHOOK = credentials('discord-webhook')
     }
 
     stages {
         stage("Build") {
             steps {
                 sh "sed -i 's/%VERSION%/${BUILD_NUMBER}/' gradle.properties"
-                sh "./gradlew clean compileJava classes jar remapJar"
+                sh "./gradlew clean build"
             }
         }
 
@@ -28,6 +24,7 @@ pipeline {
             steps {
                 script {
                     artifactPath = 'build/libs/nibbles-${BUILD_NUMBER}.jar';
+                    sourcesPath = 'build/libs/nibbles-${BUILD_NUMBER}-sources.jar';
 
                     if (env.BRANCH_NAME == "master") {
                         groupId = "team.bits"
@@ -49,11 +46,21 @@ pipeline {
                             [artifactId: artifactId,
                             classifier: '',
                             file: artifactPath,
+                            type: "jar"],
+                            [artifactId: artifactId,
+                            classifier: 'sources',
+                            file: sourcesPath,
                             type: "jar"]
                         ]
                     );
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            discordSend link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: DISCORD_WEBHOOK
         }
     }
 }

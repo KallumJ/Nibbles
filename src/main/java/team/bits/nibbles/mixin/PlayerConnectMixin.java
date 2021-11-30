@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.event.misc.PlayerConnectEvent;
 
 @Mixin(PlayerManager.class)
@@ -20,6 +21,6 @@ public class PlayerConnectMixin {
             )
     )
     public void onPlayerJoin(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerConnectEvent.EVENT.invoker().onPlayerConnect(player, connection);
+        EventManager.INSTANCE.fireEvent(new PlayerConnectEvent(player, connection));
     }
 }

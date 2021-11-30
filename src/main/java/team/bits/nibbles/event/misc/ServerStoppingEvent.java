@@ -7,12 +7,11 @@ import team.bits.nibbles.event.base.EventListener;
 
 import java.util.Objects;
 
-// TODO: events might not be the best solution for server ticks, due to performance concerns
-public class ServerTickEvent implements Event {
+public class ServerStoppingEvent implements Event {
 
     private final MinecraftServer server;
 
-    public ServerTickEvent(@NotNull MinecraftServer server) {
+    public ServerStoppingEvent(@NotNull MinecraftServer server) {
         this.server = Objects.requireNonNull(server);
     }
 
@@ -21,6 +20,6 @@ public class ServerTickEvent implements Event {
     }
 
     public interface Listener extends EventListener {
-        void onServerTick(@NotNull ServerTickEvent event);
+        void onServerStopping(@NotNull ServerStoppingEvent event);
     }
 }

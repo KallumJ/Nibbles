@@ -1,30 +1,47 @@
 package team.bits.nibbles.event.misc;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
 
-public interface PlayerInteractWithBlockEvent {
+import java.util.Objects;
 
-    Event<PlayerInteractWithBlockEvent> EVENT = EventFactory.createArrayBacked(PlayerInteractWithBlockEvent.class,
-            (listeners) -> (player, block, state, hand) -> {
-                for (PlayerInteractWithBlockEvent event : listeners) {
-                    ActionResult result = event.onPlayerInteract(player, block, state, hand);
+public class PlayerInteractWithBlockEvent implements Event {
 
-                    if (result != ActionResult.PASS) {
-                        return result;
-                    }
-                }
+    private final ServerPlayerEntity player;
+    private final BlockPos block;
+    private final BlockState state;
+    private final Hand hand;
 
-                return ActionResult.PASS;
-            }
-    );
+    public PlayerInteractWithBlockEvent(@NotNull ServerPlayerEntity player, @NotNull BlockPos block,
+                                        @NotNull BlockState state, @NotNull Hand hand) {
+        this.player = Objects.requireNonNull(player);
+        this.block = Objects.requireNonNull(block);
+        this.state = Objects.requireNonNull(state);
+        this.hand = Objects.requireNonNull(hand);
+    }
 
-    @NotNull ActionResult onPlayerInteract(@NotNull ServerPlayerEntity player, @NotNull BlockPos block, @NotNull BlockState state, @NotNull Hand hand);
+    public @NotNull ServerPlayerEntity getPlayer() {
+        return this.player;
+    }
+
+    public @NotNull BlockPos getBlock() {
+        return this.block;
+    }
+
+    public @NotNull BlockState getState() {
+        return this.state;
+    }
+
+    public @NotNull Hand getHand() {
+        return this.hand;
+    }
+
+    public interface Listener extends EventListener {
+        void onPlayerInteractWithBlock(@NotNull PlayerInteractWithBlockEvent event);
+    }
 }

@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10.57'
 	id 'maven-publish'
 }
 
@@ -22,6 +22,14 @@ repositories {
 		name = "sonatype-oss-snapshots"
 		url = "https://oss.sonatype.org/content/repositories/snapshots/"
 	}
+	maven {
+		name = "bits-maven-repo"
+		url = "https://hogwarts.bits.team/nexus/repository/bits-maven-repo/"
+		metadataSources {
+			mavenPom()
+			artifact()
+		}
+	}
 }
 
 dependencies {
@@ -30,11 +38,15 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
 	modImplementation include("net.kyori:adventure-platform-fabric:${project.kyori_version}")
+	modImplementation include("net.kyori:adventure-platform-api:4.0.0")
+	modImplementation include("net.kyori:adventure-api:4.0.0")
+	modImplementation include("net.kyori:adventure-text-serializer-plain:4.0.0")
+	modImplementation include("net.kyori:adventure-text-serializer-gson:4.0.0")
+
 	modImplementation include("mysql:mysql-connector-java:${project.mysql_cj_version}")
+//	modImplementation include("org.apache.httpcomponents:httpcore:${project.apache_httpcore_version}")
+//	modImplementation include("org.apache.httpcomponents:httpclient:${project.apache_httpclient_version}")
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.

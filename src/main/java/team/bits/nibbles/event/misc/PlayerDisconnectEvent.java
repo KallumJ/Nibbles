@@ -1,20 +1,32 @@
 package team.bits.nibbles.event.misc;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
 
-public interface PlayerDisconnectEvent {
+import java.util.Objects;
 
-    Event<PlayerDisconnectEvent> EVENT = EventFactory.createArrayBacked(PlayerDisconnectEvent.class,
-            (listeners) -> (player, connection) -> {
-                for (PlayerDisconnectEvent listener : listeners) {
-                    listener.onPlayerDisconnect(player, connection);
-                }
-            }
-    );
+public class PlayerDisconnectEvent implements Event {
 
-    void onPlayerDisconnect(@NotNull ServerPlayerEntity player, @NotNull ClientConnection connection);
+    private final ServerPlayerEntity player;
+    private final ClientConnection connection;
+
+    public PlayerDisconnectEvent(@NotNull ServerPlayerEntity player, @NotNull ClientConnection connection) {
+        this.player = Objects.requireNonNull(player);
+        this.connection = Objects.requireNonNull(connection);
+    }
+
+    public @NotNull ServerPlayerEntity getPlayer() {
+        return this.player;
+    }
+
+    public @NotNull ClientConnection getConnection() {
+        return this.connection;
+    }
+
+    public interface Listener extends EventListener {
+        void onPlayerDisonnect(@NotNull PlayerDisconnectEvent event);
+    }
 }

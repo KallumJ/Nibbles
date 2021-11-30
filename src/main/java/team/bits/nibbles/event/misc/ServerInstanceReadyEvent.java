@@ -1,18 +1,25 @@
 package team.bits.nibbles.event.misc;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
 
-public interface ServerInstanceReadyEvent {
-    Event<ServerInstanceReadyEvent> EVENT = EventFactory.createArrayBacked(ServerInstanceReadyEvent.class,
-            (listeners) -> (server) -> {
-                for (ServerInstanceReadyEvent listener : listeners) {
-                    listener.onServerInstanceReady(server);
-                }
-            }
-    );
+import java.util.Objects;
 
-    void onServerInstanceReady(@NotNull MinecraftDedicatedServer server);
+public class ServerInstanceReadyEvent implements Event {
+
+    private final MinecraftDedicatedServer server;
+
+    public ServerInstanceReadyEvent(@NotNull MinecraftDedicatedServer server) {
+        this.server = Objects.requireNonNull(server);
+    }
+
+    public @NotNull MinecraftDedicatedServer getServer() {
+        return this.server;
+    }
+
+    public interface Listener extends EventListener {
+        void onServerInstanceReady(@NotNull ServerInstanceReadyEvent event);
+    }
 }

@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.player.CopyPlayerDataEvent;
 import team.bits.nibbles.player.INibblesPlayer;
 
@@ -164,7 +165,9 @@ public abstract class NibblesPlayerMixin implements INibblesPlayer {
      * event through to the right NibblesPlayerMixin instance
      */
     static {
-        CopyPlayerDataEvent.EVENT.register(NibblesPlayerMixin::_nibblesCopyPlayerData);
+        EventManager.INSTANCE.registerEvents((CopyPlayerDataEvent.Listener) event ->
+                _nibblesCopyPlayerData(event.getOldPlayer(), event.getNewPlayer())
+        );
     }
 
     private static void _nibblesCopyPlayerData(@NotNull INibblesPlayer oldPlayer, @NotNull INibblesPlayer newPlayer) {

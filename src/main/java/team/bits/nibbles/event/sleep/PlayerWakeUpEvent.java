@@ -1,18 +1,25 @@
 package team.bits.nibbles.event.sleep;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
 
-public interface PlayerWakeUpEvent {
+import java.util.Objects;
 
-    Event<PlayerWakeUpEvent> EVENT = EventFactory.createArrayBacked(PlayerWakeUpEvent.class,
-            (listeners) -> (player) -> {
-                for (PlayerWakeUpEvent listener : listeners) {
-                    listener.onWakeUp(player);
-                }
-            });
+public class PlayerWakeUpEvent implements Event {
 
-    void onWakeUp(@NotNull PlayerEntity player);
+    private final PlayerEntity player;
+
+    public PlayerWakeUpEvent(@NotNull PlayerEntity player) {
+        this.player = Objects.requireNonNull(player);
+    }
+
+    public @NotNull PlayerEntity getPlayer() {
+        return this.player;
+    }
+
+    public interface Listener extends EventListener {
+        void onPlayerWakeUp(@NotNull PlayerWakeUpEvent event);
+    }
 }

@@ -1,8 +1,11 @@
 package team.bits.nibbles.player;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
+
+import java.util.Objects;
 
 /**
  * This event is called when the {@link net.minecraft.server.network.ServerPlayerEntity}
@@ -10,15 +13,25 @@ import org.jetbrains.annotations.NotNull;
  * Any data that needs to persist on the player should be copied from the old object
  * to the new one here.
  */
-public interface CopyPlayerDataEvent {
+public class CopyPlayerDataEvent implements Event {
 
-    Event<CopyPlayerDataEvent> EVENT = EventFactory.createArrayBacked(CopyPlayerDataEvent.class,
-            (listeners) -> (oldPlayer, newPlayer) -> {
-                for (CopyPlayerDataEvent listener : listeners) {
-                    listener.copyFromOldPlayer(oldPlayer, newPlayer);
-                }
-            }
-    );
+    private final INibblesPlayer oldPlayer;
+    private final INibblesPlayer newPlayer;
 
-    void copyFromOldPlayer(@NotNull INibblesPlayer oldPlayer, @NotNull INibblesPlayer newPlayer);
+    public CopyPlayerDataEvent(@NotNull INibblesPlayer oldPlayer, @NotNull INibblesPlayer newPlayer) {
+        this.oldPlayer = Objects.requireNonNull(oldPlayer);
+        this.newPlayer = Objects.requireNonNull(newPlayer);
+    }
+
+    public @NotNull INibblesPlayer getOldPlayer() {
+        return this.oldPlayer;
+    }
+
+    public @NotNull INibblesPlayer getNewPlayer() {
+        return this.newPlayer;
+    }
+
+    public interface Listener extends EventListener {
+        void onCopyPlayerData(@NotNull CopyPlayerDataEvent event);
+    }
 }

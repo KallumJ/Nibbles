@@ -1,14 +1,15 @@
 package team.bits.nibbles;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.fabric.FabricServerAudiences;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
 import org.jetbrains.annotations.NotNull;
 import team.bits.nibbles.command.CommandManager;
+import team.bits.nibbles.event.base.EventManager;
+import team.bits.nibbles.event.misc.ServerStartingEvent;
+import team.bits.nibbles.event.misc.ServerStoppedEvent;
 import team.bits.nibbles.event.misc.ServerTickEvent;
 import team.bits.nibbles.utils.Scheduler;
 
@@ -33,11 +34,11 @@ public class Nibbles implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ServerLifecycleEvents.SERVER_STARTING.register(server -> adventure = FabricServerAudiences.of(server));
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> adventure = null);
+        EventManager.INSTANCE.registerEvents((ServerStartingEvent.Listener) event -> adventure = FabricServerAudiences.of(event.getServer()));
+        EventManager.INSTANCE.registerEvents((ServerStoppedEvent.Listener) event -> adventure = null);
 
-        ServerTickEvent.EVENT.register(server -> Scheduler.tick());
+        EventManager.INSTANCE.registerEvents((ServerTickEvent.Listener) event -> Scheduler.tick());
 
-        CommandRegistrationCallback.EVENT.register(CommandManager.INSTANCE);
+        EventManager.INSTANCE.registerEvents(CommandManager.INSTANCE);
     }
 }

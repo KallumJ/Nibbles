@@ -15,7 +15,10 @@
     "PlayerSleepMixin",
     "PlayerWakeUpMixin",
     "ServerInstanceMixin",
-    "ServerTickMixin"
+    "ServerTickMixin",
+    "CommandRegistrationMixin",
+    "MinecraftServerMixin",
+    "CopyPlayerDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

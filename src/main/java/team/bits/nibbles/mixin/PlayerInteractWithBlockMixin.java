@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.event.misc.PlayerInteractWithBlockEvent;
 
 @Mixin(ServerPlayNetworkHandler.class)
@@ -34,6 +35,6 @@ public class PlayerInteractWithBlockMixin {
         final BlockPos pos = hitResult.getBlockPos();
         final BlockState blockState = this.player.world.getBlockState(pos);
 
-        PlayerInteractWithBlockEvent.EVENT.invoker().onPlayerInteract(this.player, pos, blockState, hand);
+        EventManager.INSTANCE.fireEvent(new PlayerInteractWithBlockEvent(this.player, pos, blockState, hand));
     }
 }

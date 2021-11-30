@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.player.CopyPlayerDataEvent;
 import team.bits.nibbles.player.INibblesPlayer;
 
@@ -21,6 +22,6 @@ public abstract class CopyPlayerDataMixin {
         Objects.requireNonNull(oldPlayer);
         INibblesPlayer eOldPlayer = (INibblesPlayer) oldPlayer;
         INibblesPlayer eNewPlayer = (INibblesPlayer) this;
-        CopyPlayerDataEvent.EVENT.invoker().copyFromOldPlayer(eOldPlayer, eNewPlayer);
+        EventManager.INSTANCE.fireEvent(new CopyPlayerDataEvent(eOldPlayer, eNewPlayer));
     }
 }

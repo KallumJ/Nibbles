@@ -1,24 +1,32 @@
 package team.bits.nibbles.event.misc;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
+import team.bits.nibbles.event.base.Event;
+import team.bits.nibbles.event.base.EventListener;
 
-public interface PlayerMoveEvent {
+import java.util.Objects;
 
-    Event<PlayerMoveEvent> EVENT = EventFactory.createArrayBacked(PlayerMoveEvent.class,
-            // there's some special stuff here cuz this event is called very frequently (many times per second)
-            // so we use a special overload of the method to improve performance in our use case
-            (player, moveVector) -> {
-            },
-            (listeners) -> (player, moveVector) -> {
-                for (PlayerMoveEvent listener : listeners) {
-                    listener.onPlayerMove(player, moveVector);
-                }
-            }
-    );
+public class PlayerMoveEvent implements Event {
 
-    void onPlayerMove(@NotNull PlayerEntity player, @NotNull Vec3d moveVector);
+    private final PlayerEntity player;
+    private final Vec3d moveVector;
+
+    public PlayerMoveEvent(@NotNull PlayerEntity player, @NotNull Vec3d moveVector) {
+        this.player = Objects.requireNonNull(player);
+        this.moveVector = Objects.requireNonNull(moveVector);
+    }
+
+    public @NotNull PlayerEntity getPlayer() {
+        return this.player;
+    }
+
+    public @NotNull Vec3d getMoveVector() {
+        return this.moveVector;
+    }
+
+    public interface Listener extends EventListener {
+        void onPlayerMove(@NotNull PlayerMoveEvent event);
+    }
 }

@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.event.misc.PlayerMoveEvent;
 
 @Mixin(PlayerEntity.class)
@@ -26,7 +27,7 @@ public class PlayerMoveMixin {
 
         // only trigger if the player moved more than 1/10'th of a block
         if (moveVector.length() > 0.1) {
-            PlayerMoveEvent.EVENT.invoker().onPlayerMove(player, moveVector);
+            EventManager.INSTANCE.fireEvent(new PlayerMoveEvent(player, moveVector));
         }
 
         this.previousPos = currentPos;

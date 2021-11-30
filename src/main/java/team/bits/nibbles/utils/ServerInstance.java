@@ -6,6 +6,7 @@ import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 import team.bits.nibbles.Nibbles;
+import team.bits.nibbles.event.base.EventManager;
 import team.bits.nibbles.event.misc.ServerInstanceReadyEvent;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ public final class ServerInstance {
 
     public static void set(@NotNull MinecraftDedicatedServer server) {
         INSTANCE = Objects.requireNonNull(server);
-        ServerInstanceReadyEvent.EVENT.invoker().onServerInstanceReady(server);
+        EventManager.INSTANCE.fireEvent(new ServerInstanceReadyEvent(server));
     }
 
     public static @NotNull MinecraftDedicatedServer get() {
