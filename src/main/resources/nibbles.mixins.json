@@ -17,8 +17,7 @@
     "ServerInstanceMixin",
     "ServerTickMixin",
     "CommandRegistrationMixin",
-    "MinecraftServerMixin",
-    "CopyPlayerDataMixin"
+    "MinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

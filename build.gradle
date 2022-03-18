@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.10.57'
+	id 'fabric-loom' version '0.11-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -38,11 +38,9 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
 	modImplementation include("net.kyori:adventure-platform-fabric:${project.kyori_version}")
-	modImplementation include("net.kyori:adventure-platform-api:4.0.0")
-	modImplementation include("net.kyori:adventure-api:4.0.0")
-	modImplementation include("net.kyori:adventure-text-serializer-plain:4.0.0")
-	modImplementation include("net.kyori:adventure-text-serializer-gson:4.0.0")
 
 	modImplementation include("mysql:mysql-connector-java:${project.mysql_cj_version}")
 //	modImplementation include("org.apache.httpcomponents:httpcore:${project.apache_httpcore_version}")
