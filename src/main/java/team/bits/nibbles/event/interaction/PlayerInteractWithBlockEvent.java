@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.misc;
+package team.bits.nibbles.event.interaction;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.server.network.ServerPlayerEntity;

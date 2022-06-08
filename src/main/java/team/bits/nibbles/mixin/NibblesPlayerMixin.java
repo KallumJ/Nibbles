@@ -6,7 +6,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang3.Validate;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -70,8 +76,8 @@ public abstract class NibblesPlayerMixin implements INibblesPlayer {
     /**
      * @see CopyPlayerDataEvent
      */
-    public void nibblesCopyFromOldPlayer(@NotNull NibblesPlayerMixin oldPlayer) {
-        this.hasPlayedBefore = oldPlayer.hasPlayedBefore;
+    protected void nibblesCopyFromOldPlayer(@NotNull INibblesPlayer oldPlayer) {
+        this.hasPlayedBefore = oldPlayer.hasPlayedBefore();
     }
 
     /* ### Function implementations ### */
@@ -158,6 +164,18 @@ public abstract class NibblesPlayerMixin implements INibblesPlayer {
         }
 
         return true;
+    }
+
+    @Override
+    public void playSound(SoundEvent sound, SoundCategory soundCategory, float volume, float pitch) {
+        final ServerPlayerEntity player = ServerPlayerEntity.class.cast(this);
+        final ServerWorld world = player.getWorld();
+        final Vec3d position = player.getPos();
+
+        world.playSound(
+                null, position.x, position.y, position.z,
+                sound, soundCategory, volume, pitch
+        );
     }
 
     /*

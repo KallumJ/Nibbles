@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.misc.PlayerConnectEvent;
+import team.bits.nibbles.event.server.PlayerConnectEvent;
 
 @Mixin(PlayerManager.class)
 public class PlayerConnectMixin {

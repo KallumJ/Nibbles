@@ -1,12 +1,13 @@
 package team.bits.nibbles.utils;
 
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
+
+import net.minecraft.text.TextColor;
+import net.minecraft.util.Formatting;
 
 public final class Colors {
 
-    public static final TextColor POSITIVE = NamedTextColor.GREEN;
-    public static final TextColor NEGATIVE = NamedTextColor.RED;
-    public static final TextColor NEUTRAL = NamedTextColor.YELLOW;
-    public static final TextColor HEADER = NamedTextColor.GOLD;
+    public static final TextColor POSITIVE = TextColor.fromFormatting(Formatting.GREEN);
+    public static final TextColor NEGATIVE = TextColor.fromFormatting(Formatting.RED);
+    public static final TextColor NEUTRAL = TextColor.fromFormatting(Formatting.YELLOW);
+    public static final TextColor HEADER = TextColor.fromFormatting(Formatting.GOLD);
 }

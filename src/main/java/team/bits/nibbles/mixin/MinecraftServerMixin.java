@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.misc.ServerStartingEvent;
-import team.bits.nibbles.event.misc.ServerStoppedEvent;
-import team.bits.nibbles.event.misc.ServerStoppingEvent;
+import team.bits.nibbles.event.server.ServerStartingEvent;
+import team.bits.nibbles.event.server.ServerStoppedEvent;
+import team.bits.nibbles.event.server.ServerStoppingEvent;
 
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {

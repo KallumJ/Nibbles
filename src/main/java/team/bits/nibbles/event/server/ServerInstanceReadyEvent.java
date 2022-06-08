@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.misc;
+package team.bits.nibbles.event.server;
 
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import org.jetbrains.annotations.NotNull;

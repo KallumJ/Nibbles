@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.misc;
+package team.bits.nibbles.event.server;
 
 import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.NotNull;
@@ -7,11 +7,11 @@ import team.bits.nibbles.event.base.EventListener;
 
 import java.util.Objects;
 
-public class ServerStoppedEvent implements Event {
+public class ServerStoppingEvent implements Event {
 
     private final MinecraftServer server;
 
-    public ServerStoppedEvent(@NotNull MinecraftServer server) {
+    public ServerStoppingEvent(@NotNull MinecraftServer server) {
         this.server = Objects.requireNonNull(server);
     }
 
@@ -20,6 +20,6 @@ public class ServerStoppedEvent implements Event {
     }
 
     public interface Listener extends EventListener {
-        void onServerStopped(@NotNull ServerStoppedEvent event);
+        void onServerStopping(@NotNull ServerStoppingEvent event);
     }
 }

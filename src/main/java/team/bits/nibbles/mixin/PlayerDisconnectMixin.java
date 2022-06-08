@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.misc.PlayerDisconnectEvent;
+import team.bits.nibbles.event.server.PlayerDisconnectEvent;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class PlayerDisconnectMixin {

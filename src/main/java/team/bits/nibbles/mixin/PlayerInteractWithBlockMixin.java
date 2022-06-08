@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.misc.PlayerInteractWithBlockEvent;
+import team.bits.nibbles.event.interaction.PlayerInteractWithBlockEvent;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class PlayerInteractWithBlockMixin {

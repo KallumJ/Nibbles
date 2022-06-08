@@ -1,21 +1,13 @@
 package team.bits.nibbles.teleport;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
-import team.bits.nibbles.Nibbles;
 
-import java.util.List;
 import java.util.Objects;
 
 public final class TeleportUtils {

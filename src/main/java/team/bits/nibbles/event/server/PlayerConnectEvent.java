@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.misc;
+package team.bits.nibbles.event.server;
 
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -8,12 +8,12 @@ import team.bits.nibbles.event.base.EventListener;
 
 import java.util.Objects;
 
-public class PlayerDisconnectEvent implements Event {
+public class PlayerConnectEvent implements Event {
 
     private final ServerPlayerEntity player;
     private final ClientConnection connection;
 
-    public PlayerDisconnectEvent(@NotNull ServerPlayerEntity player, @NotNull ClientConnection connection) {
+    public PlayerConnectEvent(@NotNull ServerPlayerEntity player, @NotNull ClientConnection connection) {
         this.player = Objects.requireNonNull(player);
         this.connection = Objects.requireNonNull(connection);
     }
@@ -27,6 +27,6 @@ public class PlayerDisconnectEvent implements Event {
     }
 
     public interface Listener extends EventListener {
-        void onPlayerDisonnect(@NotNull PlayerDisconnectEvent event);
+        void onPlayerConnect(@NotNull PlayerConnectEvent event);
     }
 }

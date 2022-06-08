@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.damage.PlayerDamageEvent;
+import team.bits.nibbles.event.interaction.PlayerDamageEvent;
 
 @Mixin(PlayerEntity.class)
 public class PlayerDamageMixin {

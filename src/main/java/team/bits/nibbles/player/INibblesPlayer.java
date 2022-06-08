@@ -1,7 +1,10 @@
 package team.bits.nibbles.player;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -50,4 +53,6 @@ public interface INibblesPlayer {
      * @return true if the items have been removed successfully
      */
     boolean removeItem(@NotNull Item item, int amount);
+
+    void playSound(SoundEvent sound, SoundCategory category, float volume, float pitch);
 }

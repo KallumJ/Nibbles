@@ -1,11 +1,9 @@
 package team.bits.nibbles.event.base;
 
-import org.apache.commons.lang3.Validate;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.UnmodifiableView;
+import org.apache.commons.lang3.*;
+import org.jetbrains.annotations.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.*;
 
 public class EventManager {
@@ -27,7 +25,9 @@ public class EventManager {
 
     public void unregisterEvents(@NotNull EventListener listenerImpl) {
         for (EventContainer container : this.eventContainers.values()) {
-            container.removeListener(listenerImpl);
+            if (container.isListening(listenerImpl)) {
+                container.unregisterListener(listenerImpl);
+            }
         }
     }
 
@@ -36,6 +36,8 @@ public class EventManager {
 
         EventContainer eventContainer = this.eventContainers.get(event.getClass());
         if (eventContainer != null) {
+
+            eventContainer.handleUnregisters();
 
             Method eventListenerMethod = eventContainer.eventInfo.eventListenerMethod();
             for (EventListener listener : eventContainer.getListeners()) {
@@ -69,6 +71,7 @@ public class EventManager {
     private static class EventContainer {
 
         private final Set<EventListener> listeners = new HashSet<>();
+        private final Set<EventListener> unregistered = new HashSet<>();
 
         private final EventInfo eventInfo;
 
@@ -86,6 +89,21 @@ public class EventManager {
 
         public @NotNull @UnmodifiableView Set<EventListener> getListeners() {
             return Collections.unmodifiableSet(this.listeners);
+        }
+
+        public boolean isListening(@NotNull EventListener listener) {
+            return this.listeners.contains(listener);
+        }
+
+        public void unregisterListener(@NotNull EventListener listener) {
+            this.unregistered.add(listener);
+        }
+
+        public void handleUnregisters() {
+            if (!this.unregistered.isEmpty()) {
+                this.unregistered.forEach(this::removeListener);
+                this.unregistered.clear();
+            }
         }
     }
 }

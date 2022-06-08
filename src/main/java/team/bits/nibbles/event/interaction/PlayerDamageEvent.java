@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.damage;
+package team.bits.nibbles.event.interaction;
 
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;

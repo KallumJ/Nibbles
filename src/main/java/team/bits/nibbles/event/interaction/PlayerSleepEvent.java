@@ -1,4 +1,4 @@
-package team.bits.nibbles.event.sleep;
+package team.bits.nibbles.event.interaction;
 
 import net.minecraft.entity.player.PlayerEntity;
 import org.jetbrains.annotations.NotNull;
@@ -7,11 +7,11 @@ import team.bits.nibbles.event.base.EventListener;
 
 import java.util.Objects;
 
-public class PlayerWakeUpEvent implements Event {
+public class PlayerSleepEvent implements Event {
 
     private final PlayerEntity player;
 
-    public PlayerWakeUpEvent(@NotNull PlayerEntity player) {
+    public PlayerSleepEvent(@NotNull PlayerEntity player) {
         this.player = Objects.requireNonNull(player);
     }
 
@@ -20,6 +20,6 @@ public class PlayerWakeUpEvent implements Event {
     }
 
     public interface Listener extends EventListener {
-        void onPlayerWakeUp(@NotNull PlayerWakeUpEvent event);
+        void onPlayerSleep(@NotNull PlayerSleepEvent event);
     }
 }
