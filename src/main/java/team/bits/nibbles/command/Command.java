@@ -47,6 +47,10 @@ public abstract class Command implements com.mojang.brigadier.Command<ServerComm
         return this.permissionLevel;
     }
 
+    public String[] getAliases() {
+        return aliases;
+    }
+
     protected void registerAliases(@NotNull CommandDispatcher<ServerCommandSource> dispatcher,
                                    @NotNull CommandNode<ServerCommandSource> rootNode) {
         // If aliases are provided, then use them
