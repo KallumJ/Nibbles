@@ -18,7 +18,6 @@
     "ServerTickMixin",
     "CommandRegistrationMixin",
     "MinecraftServerMixin",
-    "MessageTypeMixin",
     "PlayerBlockBreakMixin",
     "EntityKilledMixin"
   ],

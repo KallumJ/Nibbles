@@ -1,18 +1,14 @@
 package team.bits.nibbles.utils;
 
-import net.minecraft.network.message.MessageType;
-import net.minecraft.server.PlayerManager;
-import net.minecraft.server.dedicated.MinecraftDedicatedServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.registry.RegistryKey;
-import org.jetbrains.annotations.NotNull;
-import team.bits.nibbles.event.base.EventManager;
-import team.bits.nibbles.event.server.ServerInstanceReadyEvent;
+import net.minecraft.server.*;
+import net.minecraft.server.dedicated.*;
+import net.minecraft.server.network.*;
+import net.minecraft.text.*;
+import org.jetbrains.annotations.*;
+import team.bits.nibbles.event.base.*;
+import team.bits.nibbles.event.server.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class ServerInstance {
 
@@ -30,10 +26,10 @@ public final class ServerInstance {
         return Objects.requireNonNull(INSTANCE);
     }
 
-    public static void broadcast(Text textComponent, RegistryKey<MessageType> messageType) {
+    public static void broadcast(Text textComponent) {
         PlayerManager serverPlayerManager = ServerInstance.get().getPlayerManager();
         List<ServerPlayerEntity> onlinePlayers = serverPlayerManager.getPlayerList();
-        onlinePlayers.forEach(player -> player.sendMessage(textComponent, messageType));
+        onlinePlayers.forEach(player -> player.sendMessage(textComponent));
     }
 
     public static @NotNull Collection<ServerPlayerEntity> getOnlinePlayers() {
