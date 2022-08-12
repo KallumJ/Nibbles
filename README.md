@@ -1,6 +1,17 @@
+
 # Nibbles [![Build Status](https://jenkins.bits.team/buildStatus/icon?job=Bits%2FNibbles%2Fmaster)](https://jenkins.bits.team/job/Bits/job/Nibbles/job/master/)
 
 Library full of utility functions and classes for server-side Fabric mods
+
+## Features
+
+- Command framework for adding custom commands simply
+- Event system with custom events, allowing for event driven functionality
+- Scheduler for scheduling code to run in relation to ticks.
+- Messaging functions for broadcasting and displaying titles to players.
+- Teleporting system for safe and clean player teleporting between locations
+- More!
+
 
 ## Usage
 
