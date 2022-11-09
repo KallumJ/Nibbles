@@ -1,5 +1,5 @@
 
-# Nibbles [![Build Status](https://jenkins.bits.team/buildStatus/icon?job=Bits%2FNibbles%2Fmaster)](https://jenkins.bits.team/job/Bits/job/Nibbles/job/master/)
+# Nibbles [![Build Status](https://jenkins.bits.team/job/Bits/job/Nibbles/job/master/badge/icon)](https://jenkins.bits.team/job/Bits/job/Nibbles/job/master/) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white) 
 
 Library full of utility functions and classes for server-side Fabric mods
 
